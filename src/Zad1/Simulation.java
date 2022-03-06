@@ -13,7 +13,7 @@ public class Simulation {
         processes = new ArrayList<>();
     }
 
-    public void startFCFS(PlanningAlgorithm algorithm) {
+    public void start(PlanningAlgorithm algorithm) {
         if(processes.size() > 0) {
             algorithm.start(processes);
         } else {
