@@ -8,27 +8,24 @@ import java.util.stream.Collectors;
 public class SJF implements PlanningAlgorithm {
 
     @Override
-    public void start(List<SystemProcess> processes) {
+    public List<SystemProcess> start(List<SystemProcess> processes) {
         System.out.println("\nStarting SJF...\n");
         int currentTime = processes.get(0).arrivalTime;
         List<SystemProcess> currentProcesses = new ArrayList<>();
         SystemProcess prev;
         SystemProcess curr = processes.get(0);
+        System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
         boolean flag = false;
         while(true) {
             int finalCurrentTime = currentTime;
-            List<SystemProcess> newProcesses = processes.stream()
+            currentProcesses.addAll(processes.stream()
                     .filter((process) -> process.arrivalTime <= finalCurrentTime && process.completionLevel < process.burstTime)
-                    .collect(Collectors.toList());
-            for(SystemProcess process: newProcesses) {
-                if(!currentProcesses.contains(process)) {
-                    currentProcesses.add(process);
-                }
-            }
+                    .collect(Collectors.toList()));
             if(currentProcesses.size() == 0) {
                 break;
             }
             currentProcesses = currentProcesses.stream()
+                    .distinct()
                     .sorted(Comparator.comparingInt((process) -> process.burstTime))
                     .collect(Collectors.toList());
             prev = curr;
@@ -43,9 +40,8 @@ public class SJF implements PlanningAlgorithm {
             curr.completionLevel = curr.burstTime;
             currentTime = curr.completionTime;
             currentProcesses.remove(curr);
-            System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
+//            System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
         }
-        double avgWaitingTime = processes.stream().mapToDouble((process) -> process.waitingTime).sum() / processes.size();
-        System.out.println("Average waitingTime= " + avgWaitingTime);
+        return processes;
     }
 }

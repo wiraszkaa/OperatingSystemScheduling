@@ -4,13 +4,13 @@ public class SystemProcess {
     String name;
     final int id;
 
-    final int burstTime;
+    public final int burstTime;
     int completionLevel;
 
     final int arrivalTime;
-    int waitingTime;
-    int completionTime;
-    int turnaroundTime;
+    public int waitingTime;
+    public int completionTime;
+    public int turnaroundTime;
 
     public SystemProcess(String name, int id, int burstTime, int arrivalTime) {
         this.name = name;

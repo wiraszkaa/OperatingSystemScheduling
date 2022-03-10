@@ -5,7 +5,7 @@ import java.util.List;
 public class FCFS implements PlanningAlgorithm {
 
     @Override
-    public void start(List<SystemProcess> processes) {
+    public List<SystemProcess> start(List<SystemProcess> processes) {
         System.out.println("\nStarting FCFS...\n");
         SystemProcess first = processes.get(0);
         System.out.println("Starting " + first.name + " with burstTime= " + first.burstTime + " and waitingTime= " + first.waitingTime);
@@ -15,9 +15,10 @@ public class FCFS implements PlanningAlgorithm {
             curr.waitingTime = Math.max(prev.completionTime - curr.arrivalTime, 0);
             curr.completionTime = curr.arrivalTime + curr.waitingTime + curr.burstTime;
             curr.turnaroundTime = curr.completionTime - curr.arrivalTime;
-            System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
+            curr.completionLevel = curr.burstTime;
+//            System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
         }
-        double avgWaitingTime = processes.stream().mapToDouble((process) -> process.waitingTime).sum() / processes.size();
-        System.out.println("Average waitingTime= " + avgWaitingTime);
+
+        return processes;
     }
 }
