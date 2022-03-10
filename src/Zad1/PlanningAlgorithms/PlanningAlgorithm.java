@@ -1,4 +1,4 @@
-package Zad1;
+package Zad1.PlanningAlgorithms;
 
 import java.util.List;
 
