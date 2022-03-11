@@ -18,8 +18,8 @@ public class Simulation {
     public void start(PlanningAlgorithm algorithm) {
         long start = System.nanoTime();
         List<SystemProcess> processes = algorithm.start(processesBuilder.createCopy());
-        long finish = (System.nanoTime() - start) / 1000000;
-        System.out.println("\nSimulation took " + finish + " ms");
+        long finish = (System.nanoTime() - start);
+        System.out.println("Simulation took " + ElapsedTimeString.getTime(finish));
 
         double avgWT = processes.stream().mapToDouble((process) -> process.waitingTime).sum() / processes.size();
         System.out.println("Average waitingTime= " + avgWT);
@@ -31,11 +31,24 @@ public class Simulation {
         }
         System.out.println("Maximum waitingTime= " + maxWaitingTime);
 
-        OptionalInt maxCT = processes.stream().mapToInt((process) -> process.completionTime).max();
+        double avgTT = processes.stream().mapToDouble((process) -> process.turnaroundTime).sum() / processes.size();
+        System.out.println("Average turnaroundTime= " + avgTT);
+
+        OptionalDouble maxTT = processes.stream().mapToDouble((process) -> process.turnaroundTime).max();
+        String maxTurnaroundTime = "Not Defined";
+        if(maxTT.isPresent()) {
+            maxTurnaroundTime = String.valueOf(maxTT.getAsDouble());
+        }
+        System.out.println("Maximum turnaroundTime= " + maxTurnaroundTime);
+
+        OptionalDouble maxCT = processes.stream().mapToDouble((process) -> process.completionTime).max();
         String maxCompletionTime = "Not Defined";
         if(maxCT.isPresent()) {
-            maxCompletionTime = String.valueOf(maxCT.getAsInt());
+            maxCompletionTime = String.valueOf(maxCT.getAsDouble());
         }
-        System.out.println("Processes execution= " + maxCompletionTime);
+
+        System.out.println("Process switches= " + algorithm.getProcessSwitches());
+
+        System.out.println("All Processes executionTime= " + maxCompletionTime);
     }
 }

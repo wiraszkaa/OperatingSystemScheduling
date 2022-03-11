@@ -38,9 +38,9 @@ public class ProcessesBuilder {
         BTlimits.put(Amount.MEDIUM, new int[]{10, 20});
         BTlimits.put(Amount.HIGH, new int[]{20, 100});
         densityLimits = new HashMap<>();
-        densityLimits.put(Amount.LOW, new int[]{0, 3});
+        densityLimits.put(Amount.LOW, new int[]{10, 50});
         densityLimits.put(Amount.MEDIUM, new int[]{3, 10});
-        densityLimits.put(Amount.HIGH, new int[]{10, 50});
+        densityLimits.put(Amount.HIGH, new int[]{0, 3});
 
         processes = new ArrayList<>();
     }
@@ -178,6 +178,10 @@ public class ProcessesBuilder {
         sb.deleteCharAt(sb.lastIndexOf(" "));
         sb.append("}");
         return sb.toString();
+    }
+
+    public int getSegments() {
+        return segments;
     }
 
     @Override

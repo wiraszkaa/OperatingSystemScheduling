@@ -1,14 +1,18 @@
-package Zad1.PlanningAlgorithms;
+package Zad1.PlanningAlgorithms.FCFS;
+
+import Zad1.PlanningAlgorithms.PlanningAlgorithm;
+import Zad1.PlanningAlgorithms.SystemProcess;
 
 import java.util.List;
 
 public class FCFS implements PlanningAlgorithm {
+    private int processSwitches;
 
     @Override
     public List<SystemProcess> start(List<SystemProcess> processes) {
         System.out.println("\nStarting FCFS...\n");
         SystemProcess first = processes.get(0);
-        System.out.println("Starting " + first.name + " with burstTime= " + first.burstTime + " and waitingTime= " + first.waitingTime);
+//        System.out.println("Starting " + first.name + " with burstTime= " + first.burstTime + " and waitingTime= " + first.waitingTime);
         for(int i = 1; i < processes.size(); i++) {
             SystemProcess prev = processes.get(i - 1);
             SystemProcess curr = processes.get(i);
@@ -16,9 +20,13 @@ public class FCFS implements PlanningAlgorithm {
             curr.completionTime = curr.arrivalTime + curr.waitingTime + curr.burstTime;
             curr.turnaroundTime = curr.completionTime - curr.arrivalTime;
             curr.completionLevel = curr.burstTime;
-//            System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
         }
-
+        processSwitches = processes.size();
         return processes;
+    }
+
+    @Override
+    public int getProcessSwitches() {
+        return processSwitches;
     }
 }

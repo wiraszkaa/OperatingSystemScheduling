@@ -1,16 +1,16 @@
 package Zad1.PlanningAlgorithms;
 
 public class SystemProcess {
-    String name;
-    final int id;
+    public String name;
+    public final int id;
 
     public final int burstTime;
-    int completionLevel;
+    public int completionLevel;
 
-    final int arrivalTime;
-    public int waitingTime;
-    public int completionTime;
-    public int turnaroundTime;
+    public final int arrivalTime;
+    public double waitingTime;
+    public double completionTime;
+    public double turnaroundTime;
 
     public SystemProcess(String name, int id, int burstTime, int arrivalTime) {
         this.name = name;
@@ -19,7 +19,13 @@ public class SystemProcess {
         this.arrivalTime = arrivalTime;
         waitingTime = 0;
         turnaroundTime = 0;
-        completionTime = arrivalTime + waitingTime + burstTime;
         completionLevel = 0;
+        completionTime = arrivalTime + burstTime;
+    }
+
+    public void setCompletionTime(int completionTime) { //FOR RR
+        this.completionTime = completionTime;
+        turnaroundTime = completionTime - arrivalTime;
+        waitingTime = (waitingTime + completionTime) / 2;
     }
 }
