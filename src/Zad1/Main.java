@@ -18,11 +18,11 @@ public class Main {
     public static void main(String[] args) throws InvalidAttributeValueException {
         UI();
 //        long start = System.nanoTime();
-//        ProcessesBuilder processesBuilder = new ProcessesBuilder(1_000_000);
+//        ProcessesBuilder processesBuilder = new ProcessesBuilder(15_000_000);
 //        processesBuilder.segmentsNumber(2);
-//        processesBuilder.processesBTinSegments(List.of(Amount.MEDIUM, Amount.LOW));
-//        processesBuilder.processesNumberInSegments(List.of(Amount.HIGH, Amount.LOW));
-//        processesBuilder.processesDensityInSegments(List.of(Amount.HIGH, Amount.LOW));
+//        processesBuilder.processesBTinSegments(List.of(Amount.HIGH, Amount.HIGH));
+//        processesBuilder.processesNumberInSegments(List.of(Amount.MEDIUM, Amount.MEDIUM));
+//        processesBuilder.processesDensityInSegments(List.of(Amount.HIGH, Amount.HIGH));
 //        Simulation simulation = new Simulation(processesBuilder);
 //        simulation.start(new FCFS());
 //        simulation.start(new SJF());
