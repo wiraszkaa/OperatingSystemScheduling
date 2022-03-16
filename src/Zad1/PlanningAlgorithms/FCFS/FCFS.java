@@ -11,7 +11,7 @@ public class FCFS implements PlanningAlgorithm {
     @Override
     public List<SystemProcess> start(List<SystemProcess> processes) {
         System.out.println("\nStarting FCFS...\n");
-        SystemProcess first = processes.get(0);
+//        SystemProcess first = processes.get(0);
 //        System.out.println("Starting " + first.name + " with burstTime= " + first.burstTime + " and waitingTime= " + first.waitingTime);
         for(int i = 1; i < processes.size(); i++) {
             SystemProcess prev = processes.get(i - 1);

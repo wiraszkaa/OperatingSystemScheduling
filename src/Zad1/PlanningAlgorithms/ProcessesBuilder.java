@@ -9,10 +9,7 @@ public class ProcessesBuilder {
 
     private final int processesAmount;
     private int segments;
-    private double midPercentage;
-    private double percentageChange;
     private List<Amount> BTinSegments;
-    private List<Amount> processesInSegments;
     private List<Amount> densityInSegments;
     private final HashMap<Amount, int[]> BTlimits;
     private final HashMap<Amount, int[]> densityLimits;
@@ -28,10 +25,7 @@ public class ProcessesBuilder {
 
         this.processesAmount = processesAmount;
         segments = 3;
-        midPercentage = 0.4;
-        percentageChange = 0.3;
         BTinSegments = new ArrayList<>(Arrays.asList(Amount.MEDIUM, Amount.MEDIUM, Amount.MEDIUM));
-        processesInSegments = new ArrayList<>(Arrays.asList(Amount.MEDIUM, Amount.MEDIUM, Amount.MEDIUM));
         densityInSegments = new ArrayList<>(Arrays.asList(Amount.MEDIUM, Amount.MEDIUM, Amount.MEDIUM));
         BTlimits = new HashMap<>();
         BTlimits.put(Amount.LOW, new int[]{0, 10});
@@ -53,25 +47,9 @@ public class ProcessesBuilder {
         return false;
     }
 
-    public boolean midPercentage(double percentage) {
-        if (percentage > 0 && percentage < 1) {
-            this.midPercentage = percentage;
-            return true;
-        }
-        return false;
-    }
-
     public boolean processesBTinSegments(List<Amount> burstTime) {
         if(burstTime.size() == segments) {
             this.BTinSegments = burstTime;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean processesNumberInSegments(List<Amount> processes) {
-        if(processes.size() == segments) {
-            this.processesInSegments = processes;
             return true;
         }
         return false;
@@ -125,24 +103,12 @@ public class ProcessesBuilder {
     public ArrayList<SystemProcess> create() throws InvalidAttributeValueException {
         System.out.println("Creating " + processesAmount + " processes...");
 
-        if(BTinSegments.size() != segments || processesInSegments.size() != segments || densityInSegments.size() != segments) {
+        if(BTinSegments.size() != segments || densityInSegments.size() != segments) {
             throw new InvalidAttributeValueException();
         }
-        int lowSegments = Collections.frequency(processesInSegments, Amount.LOW);
-        int mediumSegments = Collections.frequency(processesInSegments, Amount.MEDIUM);
-        int highSegments = Collections.frequency(processesInSegments, Amount.HIGH);
-        if(lowSegments != highSegments) {
-            percentageChange = (1 - midPercentage * (lowSegments + mediumSegments + highSegments)) / (highSegments - lowSegments);
-        } else {
-            midPercentage = 1.0 / (2 * lowSegments + mediumSegments);
-        }
+
         for (int i = 0; i < segments; i++) {
-            double percentage = midPercentage;
-            switch (processesInSegments.get(i)) {
-                case LOW -> percentage -= percentageChange;
-                case HIGH -> percentage += percentageChange;
-            }
-            int number = (int) (processesAmount * percentage);
+            int number = (int) (processesAmount * (1.0 / segments));
             if(i == segments - 1) {
                 int addition = processesAmount - lastProcessID - number;
                 if(addition != 0) {
@@ -188,10 +154,7 @@ public class ProcessesBuilder {
     public String toString() {
         return "Parameters:" +
                 "\nsegments=" + segments +
-                "\nmidPercentage=" + (midPercentage * 100) + "%" +
-                "\npercentageChange=" + (percentageChange * 100) + "%" +
                 "\nBTinSegments=" + BTinSegments +
-                "\nprocessesInSegments=" + processesInSegments +
                 "\ndensityInSegments=" + densityInSegments +
                 "\nBTlimits=" + limitsToString(BTlimits) +
                 "\ndensityLimits=" + limitsToString(densityLimits);

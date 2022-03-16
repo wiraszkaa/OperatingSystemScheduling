@@ -7,10 +7,7 @@ import Zad1.PlanningAlgorithms.RR.RR;
 import Zad1.PlanningAlgorithms.SJF.SJF;
 
 import javax.management.InvalidAttributeValueException;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final Scanner sc = new Scanner(System.in);
@@ -18,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws InvalidAttributeValueException {
         UI();
 //        long start = System.nanoTime();
-//        ProcessesBuilder processesBuilder = new ProcessesBuilder(15_000_000);
+//        ProcessesBuilder processesBuilder = new ProcessesBuilder(10);
 //        processesBuilder.segmentsNumber(2);
 //        processesBuilder.processesBTinSegments(List.of(Amount.HIGH, Amount.HIGH));
 //        processesBuilder.processesNumberInSegments(List.of(Amount.MEDIUM, Amount.MEDIUM));
@@ -70,12 +67,10 @@ public class Main {
                 """
                         Choose parameters:
                         1 - Segments Number
-                        2 - Medium Percentage
-                        3 - Processes BT in Segments
-                        4 - Processes Number in Segments
-                        5 - Processes Density in Segments
-                        6 - BT limits
-                        7 - Density limits
+                        2 - Processes BT in Segments
+                        3 - Processes Density in Segments
+                        4 - BT limits
+                        5 - Density limits
                         ANY - Back""");
     }
 
@@ -114,12 +109,10 @@ public class Main {
             String option = sc.nextLine();
             switch (option) {
                 case "1" -> chooseSegments(processesBuilder);
-                case "2" -> midPercentage(processesBuilder);
-                case "3" -> BTInSegments(processesBuilder);
-                case "4" -> nInSegments(processesBuilder);
-                case "5" -> densityInSegments(processesBuilder);
-                case "6" -> BTLimits(processesBuilder);
-                case "7" -> densityLimits(processesBuilder);
+                case "2" -> BTInSegments(processesBuilder);
+                case "3" -> densityInSegments(processesBuilder);
+                case "4" -> BTLimits(processesBuilder);
+                case "5" -> densityLimits(processesBuilder);
                 default -> quit = true;
             }
         }
@@ -131,18 +124,7 @@ public class Main {
         if (processesBuilder.segmentsNumber(input)) {
             System.out.println("Set segments to " + input);
             BTInSegments(processesBuilder);
-            nInSegments(processesBuilder);
             densityInSegments(processesBuilder);
-        } else {
-            System.out.println("Wrong input");
-        }
-    }
-
-    private static void midPercentage(ProcessesBuilder processesBuilder) {
-        System.out.println("Choose medium percentage in [%]:");
-        double input = (double) userInteger() / 100.0;
-        if (processesBuilder.midPercentage(input)) {
-            System.out.println("Set medium Percentage to " + input);
         } else {
             System.out.println("Wrong input");
         }
@@ -171,15 +153,6 @@ public class Main {
         System.out.println("Choose Processes BT in Segments:");
         if (processesBuilder.processesBTinSegments(createAmountList(processesBuilder.getSegments()))) {
             System.out.println("Processes BT set");
-        } else {
-            System.out.println("Wrong Input");
-        }
-    }
-
-    private static void nInSegments(ProcessesBuilder processesBuilder) {
-        System.out.println("Choose Processes Number in Segments:");
-        if (processesBuilder.processesNumberInSegments(createAmountList(processesBuilder.getSegments()))) {
-            System.out.println("Processes Number set");
         } else {
             System.out.println("Wrong Input");
         }

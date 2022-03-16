@@ -21,28 +21,6 @@ public class RR implements PlanningAlgorithm {
         System.out.println("\nStarting RR...\n");
         int completed = 0;
         int currentTime = processes.get(0).arrivalTime;
-//        int lastProcess = 0;
-//        LinkedList<SystemProcess> currentProcesses = new LinkedList<>();
-//        LinkedList<SystemProcess> temp = new LinkedList<>();
-//        while(completed < processes.size()) {
-//            lastProcess = ProcessAppearingHelper.addProcesses(processes, currentProcesses, lastProcess, currentTime);
-//            for(SystemProcess process: currentProcesses) {
-//                process.completionLevel += quantum;
-//                currentTime += quantum;
-//                processSwitches++;
-//                double rest = process.completionLevel - process.burstTime;
-//                if(rest >= 0) {
-//                    completed++;
-//                    process.completionLevel -= rest;
-//                    currentTime -= rest;
-//                    process.setCompletionTime(currentTime);
-//                    temp.add(process);
-//                } else if(rest == -process.burstTime + quantum) {
-//                    process.waitingTime = (int) (currentTime - quantum - process.arrivalTime);
-//                }
-//            }
-//            currentProcesses.removeAll(temp);
-//        }
         while (completed < processes.size()) {
             for (SystemProcess process : processes) {
                 if (process.arrivalTime <= currentTime && process.completionLevel < process.burstTime) {
