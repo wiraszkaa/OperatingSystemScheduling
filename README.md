@@ -1,5 +1,5 @@
 # SOL
-Zad1 is a simple Planning Algorithms Simulator with:
+Zad1 is a simple Operating System Scheduling Algorithm Simulator with:
 -FCFS (First Comes First Served)
 -SJF (Shortest Job First)
 -RR (Round Robin)
