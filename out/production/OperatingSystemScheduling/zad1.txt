@@ -1,0 +1,52 @@
+Program ma symulować działanie algorytmów planowania dostępu do procesora dla zgłaszających się procesów.
+Zbadać średni czas oczekiwania procesów dla różnych algorytmów planowania:
+- FCFS
+- SJF (z wywłaszczaniem i bez)
+- rotacyjnego (z możliwością wyboru kwantu czasu)
+Należy samodzielnie sformułować założenia symulacji.
+Wskazówki:
+- algorytmy najlepiej sprawdzać dla tych samych danych testowych (tj. tych samych ciągów testowych zgłaszających się procesów)
+- ciągów testowych powinno być więcej (20? 50?); wynikiem będą wartości średnie.
+- w każdym ciągu będzie N procesów o losowych długościach fazy procesora (rozkład długości faz dobrać tak, by odpowiadał sytuacji w rzeczywistym systemie,
+w którym nie jest równomierny), zgłaszających się w losowych momentach (dobrać parametry tak, by mogła powstać kolejka procesów oczekujących na przydział procesora).
+- możliwa reprezentacja procesu: rekord (numer, dł.fazy procesora, moment zgłoszenia się, czas oczekiwania /początkowo równy 0/...)
+Uzyskane wyniki należy wytłumaczyć i być gotowym na wyciągnięcie z nich wniosków... :)
+Mile widziana możliwość sterowania parametrami symulacji.
+Przy zaliczeniu należy być przygotowanym na ew. pytania dotyczące materiału omówionego na wykładzie i związanego z tematem zadania.. .
+
+                    System.out.println("\nStarting SJF...\n");
+                    int currentTime = processes.get(0).arrivalTime;
+                    int lastProcess = 0;
+                    List<SystemProcess> currentProcesses = new LinkedList<>();
+                    SystemProcess prev;
+                    SystemProcess curr = processes.get(0);
+                    curr.completionTime = curr.arrivalTime;
+                    System.out.println("Starting " + curr.name + " with burstTime= " + curr.burstTime + " and waitingTime= " + curr.waitingTime);
+                    while(true) {
+                        for(int i = lastProcess; i < processes.size(); i++) {
+                            SystemProcess process = processes.get(i);
+                            if(process.arrivalTime <= currentTime) {
+                                int index = Collections.binarySearch(currentProcesses, process, Comparator.comparingInt(o -> o.burstTime));
+                                if(index < 0) {
+                                    currentProcesses.add(-index - 1, process);
+                                } else {
+                                    currentProcesses.add(index + 1, process);
+                                }
+                                lastProcess = process.id + 1;
+                            } else {
+                                break;
+                            }
+                        }
+                        if(currentProcesses.size() == 0) {
+                            break;
+                        }
+                        prev = curr;
+                        curr = currentProcesses.get(0);
+                        curr.waitingTime = Math.max(prev.completionTime - curr.arrivalTime, 0);
+                        curr.completionTime = curr.arrivalTime + curr.waitingTime + curr.burstTime;
+                        curr.turnaroundTime = curr.completionTime - curr.arrivalTime;
+                        curr.completionLevel = curr.burstTime;
+                        currentTime = curr.completionTime;
+                        currentProcesses.remove(curr);
+                    }
+                    return processes;

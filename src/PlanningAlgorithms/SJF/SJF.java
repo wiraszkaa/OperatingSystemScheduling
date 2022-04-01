@@ -1,8 +1,7 @@
-package Zad1.PlanningAlgorithms.SJF;
+package PlanningAlgorithms.SJF;
 
-import Zad1.PlanningAlgorithms.PlanningAlgorithm;
-import Zad1.PlanningAlgorithms.ProcessAppearingHelper;
-import Zad1.PlanningAlgorithms.SystemProcess;
+import PlanningAlgorithms.PlanningAlgorithm;
+import PlanningAlgorithms.SystemProcess;
 
 import java.util.*;
 
@@ -20,7 +19,7 @@ public class SJF implements PlanningAlgorithm {
         SystemProcess curr = processes.get(0);
         curr.completionTime = curr.arrivalTime;
         while(completed < processes.size()) {
-            lastProcess = ProcessAppearingHelper.addProcesses(processes, currentProcesses, lastProcess, currentTime);
+            lastProcess = addProcesses(processes, currentProcesses, lastProcess, currentTime);
             if(currentProcesses.size() > 0) {
                 prev = curr;
                 curr = currentProcesses.first();
@@ -39,6 +38,19 @@ public class SJF implements PlanningAlgorithm {
         }
         processSwitches = processes.size();
         return processes;
+    }
+
+    private static int addProcesses(List<SystemProcess> processes, Collection<SystemProcess> currentProcesses, int lastProcess, double currentTime) {
+        for(int i = lastProcess; i < processes.size(); i++) {
+            SystemProcess process = processes.get(i);
+            if(process.arrivalTime <= currentTime) {
+                currentProcesses.add(process);
+                lastProcess = process.id + 1;
+            } else {
+                break;
+            }
+        }
+        return lastProcess;
     }
 
     @Override

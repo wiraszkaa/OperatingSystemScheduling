@@ -1,4 +1,4 @@
-package Zad1.PlanningAlgorithms;
+package PlanningAlgorithms;
 
 import javax.management.InvalidAttributeValueException;
 import java.util.*;
@@ -13,6 +13,7 @@ public class ProcessesBuilder {
     private List<Amount> densityInSegments;
     private final HashMap<Amount, int[]> BTlimits;
     private final HashMap<Amount, int[]> densityLimits;
+    private boolean manual;
 
     private final ArrayList<SystemProcess> processes;
 
@@ -35,6 +36,7 @@ public class ProcessesBuilder {
         densityLimits.put(Amount.LOW, new int[]{10, 50});
         densityLimits.put(Amount.MEDIUM, new int[]{3, 10});
         densityLimits.put(Amount.HIGH, new int[]{0, 3});
+        manual = false;
 
         processes = new ArrayList<>();
     }
@@ -96,29 +98,40 @@ public class ProcessesBuilder {
         }
     }
 
+    public void manualMode(List<Integer> list) {
+        System.out.println("Manually creating " + processesAmount + " processes...");
+        lastProcessID = 0;
+        for(int i = 1; i < list.size(); i += 2) {
+            processes.add(new SystemProcess("Process" + lastProcessID, lastProcessID, list.get(i), list.get(i - 1)));
+        }
+        manual = true;
+    }
+
     private int rand(int low, int high) {
         return new Random().nextInt(high - low) + low;
     }
 
-    public ArrayList<SystemProcess> create() throws InvalidAttributeValueException {
-        System.out.println("Creating " + processesAmount + " processes...");
+    public void create() throws InvalidAttributeValueException {
+        if(!manual) {
+            System.out.println("Creating " + processesAmount + " processes...");
+            lastProcessID = 0;
 
-        if(BTinSegments.size() != segments || densityInSegments.size() != segments) {
-            throw new InvalidAttributeValueException();
-        }
-
-        for (int i = 0; i < segments; i++) {
-            int number = (int) (processesAmount * (1.0 / segments));
-            if(i == segments - 1) {
-                int addition = processesAmount - lastProcessID - number;
-                if(addition != 0) {
-                    number += addition;
-                }
+            if (BTinSegments.size() != segments || densityInSegments.size() != segments) {
+                throw new InvalidAttributeValueException();
             }
-            createSegment(number, BTinSegments.get(i), densityInSegments.get(i));
+
+            for (int i = 0; i < segments; i++) {
+                int number = (int) (processesAmount * (1.0 / segments));
+                if (i == segments - 1) {
+                    int addition = processesAmount - lastProcessID - number;
+                    if (addition != 0) {
+                        number += addition;
+                    }
+                }
+                createSegment(number, BTinSegments.get(i), densityInSegments.get(i));
+            }
         }
         System.out.println(this);
-        return processes;
     }
 
     public ArrayList<SystemProcess> createCopy() {

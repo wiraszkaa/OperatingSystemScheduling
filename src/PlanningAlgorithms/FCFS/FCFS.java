@@ -1,7 +1,7 @@
-package Zad1.PlanningAlgorithms.FCFS;
+package PlanningAlgorithms.FCFS;
 
-import Zad1.PlanningAlgorithms.PlanningAlgorithm;
-import Zad1.PlanningAlgorithms.SystemProcess;
+import PlanningAlgorithms.PlanningAlgorithm;
+import PlanningAlgorithms.SystemProcess;
 
 import java.util.List;
 

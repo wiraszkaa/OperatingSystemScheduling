@@ -1,4 +1,4 @@
-package Zad1.PlanningAlgorithms;
+package PlanningAlgorithms;
 
 public enum Amount {
     LOW, MEDIUM, HIGH;

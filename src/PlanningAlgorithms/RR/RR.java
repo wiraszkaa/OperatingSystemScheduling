@@ -1,10 +1,8 @@
-package Zad1.PlanningAlgorithms.RR;
+package PlanningAlgorithms.RR;
 
-import Zad1.PlanningAlgorithms.PlanningAlgorithm;
-import Zad1.PlanningAlgorithms.ProcessAppearingHelper;
-import Zad1.PlanningAlgorithms.SystemProcess;
+import PlanningAlgorithms.PlanningAlgorithm;
+import PlanningAlgorithms.SystemProcess;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class RR implements PlanningAlgorithm {

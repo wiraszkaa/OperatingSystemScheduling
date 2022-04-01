@@ -1,6 +1,6 @@
-package Zad1.PlanningAlgorithms.SJF;
+package PlanningAlgorithms.SJF;
 
-import Zad1.PlanningAlgorithms.SystemProcess;
+import PlanningAlgorithms.SystemProcess;
 
 import java.util.Comparator;
 

@@ -1,5 +1,3 @@
-package Zad1;
-
 public class ElapsedTimeString {
 
     public static String getTime(long nanoseconds) {

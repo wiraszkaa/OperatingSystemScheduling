@@ -1,4 +1,4 @@
-package Zad1.PlanningAlgorithms;
+package PlanningAlgorithms;
 
 public class SystemProcess {
     public String name;

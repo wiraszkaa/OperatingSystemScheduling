@@ -1,10 +1,8 @@
-package Zad1;
-
-import Zad1.PlanningAlgorithms.Amount;
-import Zad1.PlanningAlgorithms.FCFS.FCFS;
-import Zad1.PlanningAlgorithms.ProcessesBuilder;
-import Zad1.PlanningAlgorithms.RR.RR;
-import Zad1.PlanningAlgorithms.SJF.SJF;
+import PlanningAlgorithms.Amount;
+import PlanningAlgorithms.FCFS.FCFS;
+import PlanningAlgorithms.ProcessesBuilder;
+import PlanningAlgorithms.RR.RR;
+import PlanningAlgorithms.SJF.SJF;
 
 import javax.management.InvalidAttributeValueException;
 import java.util.*;
@@ -15,11 +13,10 @@ public class Main {
     public static void main(String[] args) throws InvalidAttributeValueException {
         UI();
 //        long start = System.nanoTime();
-//        ProcessesBuilder processesBuilder = new ProcessesBuilder(10);
+//        ProcessesBuilder processesBuilder = new ProcessesBuilder(1000);
 //        processesBuilder.segmentsNumber(2);
-//        processesBuilder.processesBTinSegments(List.of(Amount.HIGH, Amount.HIGH));
-//        processesBuilder.processesNumberInSegments(List.of(Amount.MEDIUM, Amount.MEDIUM));
-//        processesBuilder.processesDensityInSegments(List.of(Amount.HIGH, Amount.HIGH));
+//        processesBuilder.processesBTinSegments(List.of(Amount.HIGH, Amount.LOW));
+//        processesBuilder.processesDensityInSegments(List.of(Amount.HIGH, Amount.LOW));
 //        Simulation simulation = new Simulation(processesBuilder);
 //        simulation.start(new FCFS());
 //        simulation.start(new SJF());
@@ -142,8 +139,8 @@ public class Main {
             String option = sc.nextLine();
             switch (option) {
                 case "1" -> result.add(Amount.LOW);
-                case default, "2" -> result.add(Amount.MEDIUM);
                 case "3" -> result.add(Amount.HIGH);
+                default -> result.add(Amount.MEDIUM);
             }
         }
         return result;

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SOL.iml" filepath="$PROJECT_DIR$/SOL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OperatingSystemScheduling.iml" filepath="$PROJECT_DIR$/OperatingSystemScheduling.iml" />
     </modules>
   </component>
 </project>

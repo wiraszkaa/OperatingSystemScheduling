@@ -1,8 +1,6 @@
-package Zad1;
-
-import Zad1.PlanningAlgorithms.PlanningAlgorithm;
-import Zad1.PlanningAlgorithms.ProcessesBuilder;
-import Zad1.PlanningAlgorithms.SystemProcess;
+import PlanningAlgorithms.PlanningAlgorithm;
+import PlanningAlgorithms.ProcessesBuilder;
+import PlanningAlgorithms.SystemProcess;
 
 import javax.management.InvalidAttributeValueException;
 import java.util.*;
